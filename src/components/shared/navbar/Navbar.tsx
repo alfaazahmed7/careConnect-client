@@ -7,6 +7,8 @@ import { useTheme } from 'next-themes';
 import { HiSun, HiMoon, HiBars3 } from 'react-icons/hi2';
 import { FaHeart } from 'react-icons/fa6';
 import { HiX } from 'react-icons/hi';
+import { Geist } from 'next/font/google';
+import { geist } from '@/lib/fonts/fonts';
 
 const NAV_LINKS = [
     { label: 'Home', href: '/' },
@@ -49,7 +51,7 @@ export default function Navbar() {
                 </Link>
 
                 {/* Desktop Navigation Routes */}
-                <nav className="hidden md:flex items-center gap-8">
+                <nav className={`hidden lg:flex items-center gap-8 ${geist.className}`}>
                     {NAV_LINKS.map((link) => {
                         const isActive = pathname === link.href;
                         return (
@@ -57,8 +59,8 @@ export default function Navbar() {
                                 key={link.href}
                                 href={link.href}
                                 className={`relative py-1.5 text-sm font-medium transition-colors duration-200 group ${isActive
-                                        ? 'text-[#2563EB] font-semibold'
-                                        : 'text-[#475569] hover:text-[#0F172A] dark:text-[#CBD5E1] dark:hover:text-[#F8FAFC]'
+                                    ? 'text-[#2563EB] font-semibold'
+                                    : 'text-[#475569] hover:text-[#0F172A] dark:text-[#CBD5E1] dark:hover:text-[#F8FAFC]'
                                     }`}
                             >
                                 {link.label}
@@ -148,8 +150,8 @@ export default function Navbar() {
                                     href={link.href}
                                     onClick={() => setIsMobileMenuOpen(false)}
                                     className={`px-3 py-2.5 rounded-md text-base font-medium transition-colors ${isActive
-                                            ? 'bg-[#EFF6FF] text-[#2563EB] font-semibold dark:bg-[#1E293B] dark:text-[#2563EB]'
-                                            : 'text-[#475569] hover:bg-[#F1F5F9] hover:text-[#0F172A] dark:text-[#CBD5E1] dark:hover:bg-[#1E293B] dark:hover:text-[#F8FAFC]'
+                                        ? 'bg-[#EFF6FF] text-[#2563EB] font-semibold dark:bg-[#1E293B] dark:text-[#2563EB]'
+                                        : 'text-[#475569] hover:bg-[#F1F5F9] hover:text-[#0F172A] dark:text-[#CBD5E1] dark:hover:bg-[#1E293B] dark:hover:text-[#F8FAFC]'
                                         }`}
                                 >
                                     {link.label}
