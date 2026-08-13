@@ -2,13 +2,12 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 import {
     HiCheckCircle,
     HiStar,
     HiMapPin,
     HiBriefcase,
-    HiVideoCamera,
-    HiUserGroup,
     HiClock
 } from 'react-icons/hi2';
 import { Doctor } from '@/types/Doctor';
@@ -18,7 +17,7 @@ interface DoctorCardProps {
 }
 
 export default function DoctorCard({ doctor }: DoctorCardProps) {
-    const primarySpecialty = doctor.professional.specialties.find(s => s.isPrimary)?.name
+    const primarySpecialty = doctor.professional.specialties.find((s) => s.isPrimary)?.name
         || doctor.professional.specialties[0]?.name
         || 'General Practitioner';
 
@@ -32,12 +31,16 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
     const doctorSlug = doctor.seo?.slug || doctor._id;
 
     return (
-        <div className="group bg-white dark:bg-[#111827] border border-[#E2E8F0] dark:border-[#334155] rounded-2xl p-5 shadow-sm hover:shadow-xl hover:border-[#2563EB]/40 transition-all duration-300 flex flex-col justify-between">
+        <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 15 }}
+            whileHover={{ y: -4 }}
+            transition={{ duration: 0.25, ease: 'easeOut' }}
+            className="group bg-white dark:bg-[#111827] border border-[#E2E8F0] dark:border-[#334155] hover:border-[#2563EB] dark:hover:border-[#2563EB] rounded-2xl p-5 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+        >
             <div>
-                {/* Top Header Section */}
                 <div className="flex items-start gap-4">
-
-                    {/* Doctor Image with Online Status */}
                     <div className="relative shrink-0">
                         <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden border border-[#E2E8F0] dark:border-[#334155] relative bg-[#F1F5F9] dark:bg-[#1E293B]">
                             <Image
@@ -47,10 +50,9 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
                                 className="object-cover group-hover:scale-105 transition-transform duration-300"
                             />
                         </div>
-                        <span className="absolute -bottom-1 -right-1 w-4 h-4 bg-[#16A34A] border-2 border-white dark:border-[#111827] rounded-full" title="Available for booking" />
+                        <span className="absolute -bottom-1 -right-1 w-4 h-4 bg-[#16A34A] border-2 border-white dark:border-[#111827] rounded-full" />
                     </div>
 
-                    {/* Identity & Rating info */}
                     <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between gap-2">
                             <div className="flex items-center gap-1.5 min-w-0">
@@ -58,11 +60,10 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
                                     {doctor.profile.fullName}
                                 </h3>
                                 {doctor.verification.status === 'verified' && (
-                                    <HiCheckCircle className="w-5 h-5 text-[#2563EB] shrink-0" title="Verified Doctor" />
+                                    <HiCheckCircle className="w-5 h-5 text-[#2563EB] shrink-0" />
                                 )}
                             </div>
 
-                            {/* Rating Pill */}
                             {doctor.rating && (
                                 <div className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 text-xs font-bold shrink-0">
                                     <HiStar className="w-4 h-4 fill-amber-400" />
@@ -82,7 +83,6 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
                             </p>
                         )}
 
-                        {/* Quick Meta Indicators */}
                         <div className="flex flex-wrap items-center gap-3 mt-3 text-xs text-[#475569] dark:text-[#CBD5E1]">
                             <div className="flex items-center gap-1">
                                 <HiBriefcase className="w-4 h-4 text-[#0D9488]" />
@@ -96,7 +96,6 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
                     </div>
                 </div>
 
-                {/* Sub-Specialties Chips */}
                 {doctor.professional.subSpecialties && doctor.professional.subSpecialties.length > 0 && (
                     <div className="flex flex-wrap gap-1.5 mt-4">
                         {doctor.professional.subSpecialties.slice(0, 3).map((sub, idx) => (
@@ -115,14 +114,12 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
                     </div>
                 )}
 
-                {/* Availability Badge */}
-                <div className="mt-4 pt-3 border-t border-[#E2E8F0] dark:border-[#334155]/60 flex items-center gap-2 text-xs text-[#16A34A] dark:text-[#16A34A] font-medium">
+                <div className="mt-4 pt-3 border-t border-[#E2E8F0] dark:border-[#334155]/60 flex items-center gap-2 text-xs text-[#16A34A] font-medium">
                     <HiClock className="w-4 h-4 shrink-0" />
                     <span>Next Available: Today, 5:00 PM</span>
                 </div>
             </div>
 
-            {/* Footer Actions & Price */}
             <div className="mt-5 pt-4 border-t border-[#E2E8F0] dark:border-[#334155] flex items-center justify-between gap-3">
                 <div>
                     <span className="text-xs text-[#64748B] dark:text-[#94A3B8] block">Consultation Fee</span>
@@ -141,12 +138,12 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
                     </Link>
                     <Link
                         href={`/doctors/${doctorSlug}/book`}
-                        className="px-4 py-2 rounded-xl bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-semibold shadow-sm transition-all active:scale-[0.98]"
+                        className="px-4 py-2 rounded-xl bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-semibold shadow-xs transition-all active:scale-[0.98]"
                     >
                         Book Now
                     </Link>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 }
