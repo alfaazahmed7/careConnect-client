@@ -13,6 +13,7 @@ import {
     HiStar,
     HiCheck
 } from 'react-icons/hi2';
+import { geist } from '@/lib/fonts/fonts';
 
 type SearchTab = 'specialty' | 'name' | 'condition';
 
@@ -44,7 +45,7 @@ export default function Banner() {
                         </div>
 
                         {/* Main Title */}
-                        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#0F172A] dark:text-[#F8FAFC] tracking-tight leading-[1.15]">
+                        <h1 className={`text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#0F172A] dark:text-[#F8FAFC] tracking-tight leading-[1.15] ${geist.className}`}>
                             Find the Right <br className="hidden sm:inline" />
                             <span className="text-[#2563EB]">Doctor, Right Now</span>
                         </h1>
