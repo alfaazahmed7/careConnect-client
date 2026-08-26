@@ -3,8 +3,21 @@ import DoctorSearchClient from '@/components/doctors/DoctorSearchClient';
 import { HiShieldCheck, HiChevronRight } from 'react-icons/hi2';
 import Link from 'next/link';
 
-export default async function DoctorsPage() {
-    const doctors = await getDoctors();
+export default async function DoctorsPage({
+    searchParams,
+}: {
+    searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
+    const params = await searchParams;
+    const queryString = new URLSearchParams();
+
+    Object.entries(params).forEach(([key, value]) => {
+        if (typeof value === "string") {
+            queryString.set(key, value);
+        }
+    });
+
+    const doctors = await getDoctors(queryString.toString());
 
     return (
         <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#0F172A] py-8 transition-colors duration-200">
