@@ -1,19 +1,19 @@
 'use client';
 
-import { useState } from 'react';
-import Link from 'next/link';
+import { geist } from '@/lib/fonts/fonts';
 import Image from 'next/image';
+import Link from 'next/link';
+import { useState } from 'react';
 import {
+    HiCheck,
+    HiCheckCircle,
+    HiClock,
     HiMagnifyingGlass,
     HiMapPin,
-    HiCheckCircle,
     HiShieldCheck,
-    HiClock,
-    HiVideoCamera,
     HiStar,
-    HiCheck
+    HiVideoCamera
 } from 'react-icons/hi2';
-import { geist } from '@/lib/fonts/fonts';
 
 type SearchTab = 'specialty' | 'name' | 'condition';
 
@@ -29,14 +29,14 @@ export default function Banner() {
     };
 
     return (
-        <section className="relative overflow-hidden bg-[#F8FAFC] dark:bg-[#0F172A] pt-8 pb-16 lg:pt-12 lg:pb-24 transition-colors duration-200">
+        <section className="relative overflow-x-clip bg-[#F8FAFC] dark:bg-[#0F172A] pt-8 pb-16 lg:pt-12 lg:pb-24 transition-colors duration-200">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
                 {/* Main Banner Grid */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
 
                     {/* Left Column - Headline & Search */}
-                    <div className="lg:col-span-7 space-y-6 text-left">
+                    <div className="min-w-0 lg:col-span-7 space-y-6 text-left">
 
                         {/* Pill Badge */}
                         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EFF6FF] dark:bg-[#1E293B] border border-[#2563EB]/20 text-xs sm:text-sm font-medium text-[#2563EB]">
@@ -59,15 +59,15 @@ export default function Banner() {
                         <div className="bg-white dark:bg-[#111827] rounded-2xl p-4 sm:p-5 shadow-xl shadow-slate-200/50 dark:shadow-none border border-[#E2E8F0] dark:border-[#334155] space-y-4">
 
                             {/* Tab Selectors */}
-                            <div className="flex items-center gap-2 border-b border-[#E2E8F0] dark:border-[#334155] pb-3">
+                            <div className="flex flex-wrap items-center gap-2 border-b border-[#E2E8F0] dark:border-[#334155] pb-3">
                                 {(['specialty', 'name', 'condition'] as SearchTab[]).map((tab) => (
                                     <button
                                         key={tab}
                                         type="button"
                                         onClick={() => setActiveTab(tab)}
                                         className={`px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold capitalize transition-all duration-200 ${activeTab === tab
-                                                ? 'bg-[#EFF6FF] text-[#2563EB] dark:bg-[#1E293B] dark:text-[#2563EB]'
-                                                : 'text-[#64748B] hover:text-[#0F172A] dark:text-[#94A3B8] dark:hover:text-[#F8FAFC]'
+                                            ? 'bg-[#EFF6FF] text-[#2563EB] dark:bg-[#1E293B] dark:text-[#2563EB]'
+                                            : 'text-[#64748B] hover:text-[#0F172A] dark:text-[#94A3B8] dark:hover:text-[#F8FAFC]'
                                             }`}
                                     >
                                         {tab === 'name' ? 'Doctor Name' : tab}
@@ -76,7 +76,7 @@ export default function Banner() {
                             </div>
 
                             {/* Input Controls */}
-                            <div className="flex flex-col sm:flex-row items-stretch gap-3">
+                            <div className="flex min-w-0 flex-col sm:flex-row items-stretch gap-3">
 
                                 {/* Search Input */}
                                 <div className="flex-1 flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-[#F8FAFC] dark:bg-[#1E293B] border border-[#E2E8F0] dark:border-[#334155] focus-within:border-[#2563EB] dark:focus-within:border-[#2563EB] transition-colors">
@@ -91,7 +91,7 @@ export default function Banner() {
                                 </div>
 
                                 {/* Location Input */}
-                                <div className="sm:w-1/3 flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-[#F8FAFC] dark:bg-[#1E293B] border border-[#E2E8F0] dark:border-[#334155] focus-within:border-[#2563EB] dark:focus-within:border-[#2563EB] transition-colors">
+                                <div className="min-w-0 sm:w-1/3 flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-[#F8FAFC] dark:bg-[#1E293B] border border-[#E2E8F0] dark:border-[#334155] focus-within:border-[#2563EB] dark:focus-within:border-[#2563EB] transition-colors">
                                     <HiMapPin className="w-5 h-5 text-[#64748B] dark:text-[#94A3B8] shrink-0" />
                                     <input
                                         type="text"
@@ -141,13 +141,13 @@ export default function Banner() {
                     </div>
 
                     {/* Right Column - Visual Graphic Composite */}
-                    <div className="lg:col-span-5 relative flex flex-col items-center justify-center gap-4 sm:gap-6 min-h-[440px]">
+                    <div className="min-w-0 lg:col-span-5 relative flex flex-col items-center justify-center gap-4 sm:gap-6">
 
                         {/* Top Row: Blue Badge + Featured Doctor Card */}
-                        <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4 items-start">
+                        <div className="w-full min-w-0 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4 items-start">
 
                             {/* Blue Card Accent */}
-                            <div className="bg-[#2563EB] text-white p-4 sm:p-5 rounded-2xl shadow-lg flex items-center gap-4 transform lg:-translate-x-6">
+                            <div className="min-w-0 bg-[#2563EB] text-white p-4 sm:p-5 rounded-2xl shadow-lg flex items-center gap-4 transform lg:-translate-x-6">
                                 <div className="flex -space-x-2 overflow-hidden">
                                     <Image width={32} height={32} className="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop" alt="User" />
                                     <Image width={32} height={32} className="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop" alt="User" />
@@ -156,14 +156,14 @@ export default function Banner() {
                                         +
                                     </div>
                                 </div>
-                                <div>
+                                <div className="min-w-0">
                                     <h4 className="text-sm font-bold">1,200+ Doctors</h4>
                                     <p className="text-xs text-blue-100">ready to help you today</p>
                                 </div>
                             </div>
 
                             {/* Primary Doctor Preview Card */}
-                            <div className="bg-white dark:bg-[#111827] border border-[#E2E8F0] dark:border-[#334155] rounded-2xl p-4 shadow-xl max-w-sm ml-auto">
+                            <div className="w-full max-w-sm min-w-0 bg-white dark:bg-[#111827] border border-[#E2E8F0] dark:border-[#334155] rounded-2xl p-4 shadow-xl ml-auto">
                                 <div className="relative h-44 w-full rounded-xl overflow-hidden mb-3">
                                     <Image
                                         src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=600&auto=format&fit=crop"
@@ -195,7 +195,7 @@ export default function Banner() {
                         </div>
 
                         {/* Floating Confirmation Card */}
-                        <div className="bg-white dark:bg-[#111827] border border-[#E2E8F0] dark:border-[#334155] rounded-xl p-3 shadow-lg flex items-center gap-3 w-fit self-start lg:ml-2">
+                        <div className="w-full max-w-sm bg-white dark:bg-[#111827] border border-[#E2E8F0] dark:border-[#334155] rounded-xl p-3 shadow-lg flex items-center gap-3 self-start lg:ml-2">
                             <div className="w-8 h-8 rounded-full bg-[#16A34A]/10 text-[#16A34A] flex items-center justify-center shrink-0">
                                 <HiCheck className="w-5 h-5" />
                             </div>
@@ -212,7 +212,7 @@ export default function Banner() {
                                 <span className="font-semibold">All Doctors Verified</span>
                             </div>
 
-                            <div className="bg-white dark:bg-[#111827] border border-[#E2E8F0] dark:border-[#334155] rounded-2xl p-3.5 shadow-lg space-y-1">
+                            <div className="min-w-0 bg-white dark:bg-[#111827] border border-[#E2E8F0] dark:border-[#334155] rounded-2xl p-3.5 shadow-lg space-y-1">
                                 <p className="text-[11px] font-medium text-[#64748B] dark:text-[#94A3B8]">Patient Satisfaction</p>
                                 <p className="text-2xl font-bold text-[#0F172A] dark:text-[#F8FAFC]">98%</p>
                                 <div className="flex items-center gap-1 text-[11px] text-[#64748B] dark:text-[#94A3B8]">
@@ -221,7 +221,7 @@ export default function Banner() {
                                             <HiStar key={i} className="w-3 h-3 fill-amber-400" />
                                         ))}
                                     </div>
-                                    <span>5.0 from 50,000+ patients</span>
+                                    <span className="break-words">5.0 from 50,000+ patients</span>
                                 </div>
                             </div>
                         </div>

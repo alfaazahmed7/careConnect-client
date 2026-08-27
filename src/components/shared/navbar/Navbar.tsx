@@ -1,14 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { geist } from '@/lib/fonts/fonts';
+import { useTheme } from 'next-themes';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useTheme } from 'next-themes';
-import { HiSun, HiMoon, HiBars3 } from 'react-icons/hi2';
+import { useState, useSyncExternalStore } from 'react';
 import { FaHeart } from 'react-icons/fa6';
 import { HiX } from 'react-icons/hi';
-import { Geist } from 'next/font/google';
-import { geist } from '@/lib/fonts/fonts';
+import { HiBars3, HiMoon, HiSun } from 'react-icons/hi2';
 
 const NAV_LINKS = [
     { label: 'Home', href: '/' },
@@ -22,12 +21,11 @@ export default function Navbar() {
     const pathname = usePathname();
     const { resolvedTheme, setTheme } = useTheme();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [mounted, setMounted] = useState(false);
-
-    // Avoid hydration mismatch by waiting for client mount
-    useEffect(() => {
-        setMounted(true);
-    }, []);
+    const mounted = useSyncExternalStore(
+        () => () => { },
+        () => true,
+        () => false
+    );
 
     const toggleTheme = () => {
         setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
@@ -74,7 +72,7 @@ export default function Navbar() {
                 </nav>
 
                 {/* Right Action Controls */}
-                <div className="hidden md:flex items-center gap-5">
+                <div className="hidden lg:flex items-center gap-5">
                     {mounted && (
                         <button
                             onClick={toggleTheme}
@@ -106,7 +104,7 @@ export default function Navbar() {
                 </div>
 
                 {/* Mobile Controls */}
-                <div className="flex md:hidden items-center gap-2">
+                <div className="flex lg:hidden items-center gap-2">
                     {mounted && (
                         <button
                             onClick={toggleTheme}
@@ -140,7 +138,7 @@ export default function Navbar() {
 
             {/* Mobile Menu */}
             {isMobileMenuOpen && (
-                <div className="md:hidden border-t border-[#E2E8F0] dark:border-[#334155] bg-[#FFFFFF] dark:bg-[#111827] px-4 pt-3 pb-6 space-y-3 shadow-lg">
+                <div className="lg:hidden border-t border-[#E2E8F0] dark:border-[#334155] bg-[#FFFFFF] dark:bg-[#111827] px-4 pt-3 pb-6 space-y-3 shadow-lg">
                     <nav className="flex flex-col space-y-1">
                         {NAV_LINKS.map((link) => {
                             const isActive = pathname === link.href;
