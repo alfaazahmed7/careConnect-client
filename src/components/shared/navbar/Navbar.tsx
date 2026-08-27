@@ -73,20 +73,20 @@ export default function Navbar() {
 
                 {/* Right Action Controls */}
                 <div className="hidden lg:flex items-center gap-5">
-                    {mounted && (
-                        <button
-                            onClick={toggleTheme}
-                            type="button"
-                            aria-label="Toggle Color Theme"
-                            className="p-2.5 rounded-full text-[#475569] hover:text-[#0F172A] hover:bg-[#F1F5F9] dark:text-[#CBD5E1] dark:hover:text-[#F8FAFC] dark:hover:bg-[#1E293B] transition-colors focus:outline-none focus:ring-2 focus:ring-[#2563EB]"
-                        >
-                            {resolvedTheme === 'dark' ? (
-                                <HiSun className="w-5 h-5 text-amber-400" />
-                            ) : (
-                                <HiMoon className="w-5 h-5" />
-                            )}
-                        </button>
-                    )}
+                    <button
+                        onClick={toggleTheme}
+                        type="button"
+                        aria-label="Toggle Color Theme"
+                        disabled={!mounted}
+                        tabIndex={mounted ? 0 : -1}
+                        className="p-2.5 rounded-full text-[#475569] hover:text-[#0F172A] hover:bg-[#F1F5F9] dark:text-[#CBD5E1] dark:hover:text-[#F8FAFC] dark:hover:bg-[#1E293B] transition-colors focus:outline-none focus:ring-2 focus:ring-[#2563EB]"
+                    >
+                        {resolvedTheme === 'dark' ? (
+                            <HiSun className="w-5 h-5 text-amber-400" />
+                        ) : (
+                            <HiMoon className="w-5 h-5" />
+                        )}
+                    </button>
 
                     <Link
                         href="/login"
@@ -105,20 +105,20 @@ export default function Navbar() {
 
                 {/* Mobile Controls */}
                 <div className="flex lg:hidden items-center gap-2">
-                    {mounted && (
-                        <button
-                            onClick={toggleTheme}
-                            type="button"
-                            aria-label="Toggle Color Theme"
-                            className="p-2 rounded-full text-[#475569] hover:bg-[#F1F5F9] dark:text-[#CBD5E1] dark:hover:bg-[#1E293B]"
-                        >
-                            {resolvedTheme === 'dark' ? (
-                                <HiSun className="w-5 h-5 text-amber-400" />
-                            ) : (
-                                <HiMoon className="w-5 h-5" />
-                            )}
-                        </button>
-                    )}
+                    <button
+                        onClick={toggleTheme}
+                        type="button"
+                        aria-label="Toggle Color Theme"
+                        disabled={!mounted}
+                        tabIndex={mounted ? 0 : -1}
+                        className="p-2 rounded-full text-[#475569] hover:bg-[#F1F5F9] dark:text-[#CBD5E1] dark:hover:bg-[#1E293B]"
+                    >
+                        {resolvedTheme === 'dark' ? (
+                            <HiSun className="w-5 h-5 text-amber-400" />
+                        ) : (
+                            <HiMoon className="w-5 h-5" />
+                        )}
+                    </button>
 
                     <button
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
