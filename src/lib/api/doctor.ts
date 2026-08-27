@@ -1,10 +1,20 @@
 import { Doctor } from "@/types/Doctor";
 import { serverFetch } from "../core/server";
 
+interface GetDoctorsResponse {
+    success: boolean;
+    total: number;
+    doctors: Doctor[];
+}
+
 export const getDoctors = async (
-    queryString: string = ""
+    queryString = ""
 ): Promise<Doctor[]> => {
-    return serverFetch<Doctor[]>(`/api/doctors?${queryString}`);
+    const data = await serverFetch<GetDoctorsResponse>(
+        `/api/doctors?${queryString}`
+    );
+
+    return data.doctors;
 };
 
 // ): Promise<Doctor[]> -> This asynchronous function returns a Promise that eventually contains an array of Doctor.

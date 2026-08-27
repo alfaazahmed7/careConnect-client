@@ -1,26 +1,26 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { motion, AnimatePresence } from 'framer-motion';
-import DoctorCard from './DoctorCard';
 import { Doctor } from '@/types/Doctor';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
 import {
-    HiMagnifyingGlass,
-    HiMapPin,
     HiAdjustmentsHorizontal,
-    HiStar,
-    HiChevronUp,
-    HiChevronDown,
-    HiSparkles,
     HiArrowTrendingDown,
     HiArrowTrendingUp,
+    HiBars3,
     HiBriefcase,
-    HiVideoCamera,
     HiCheck,
-    HiFunnel,
+    HiChevronDown,
+    HiChevronUp,
+    HiMagnifyingGlass,
+    HiMapPin,
+    HiSparkles,
+    HiStar,
+    HiVideoCamera,
     HiXMark
 } from 'react-icons/hi2';
+import DoctorCard from './DoctorCard';
 
 interface DoctorSearchClientProps {
     initialDoctors: Doctor[];
@@ -150,13 +150,13 @@ export default function DoctorSearchClient({ initialDoctors }: DoctorSearchClien
     const currentSortOption = sortOptions.find((opt) => opt.id === sortBy) || sortOptions[0];
 
     return (
-        <div className="space-y-6">
+        <div className="min-w-0 space-y-6">
 
             {/* Header Search Bar Component */}
-            <form onSubmit={handleSearchSubmit} className="bg-white dark:bg-[#111827] border border-[#E2E8F0] dark:border-[#334155] rounded-full p-2 shadow-xs transition-all duration-200 focus-within:ring-2 focus-within:ring-[#2563EB]/20">
-                <div className="flex flex-col md:flex-row items-center gap-2">
+            <form onSubmit={handleSearchSubmit} className="w-full max-w-full rounded-2xl bg-white p-2 shadow-xs transition-all duration-200 focus-within:ring-2 focus-within:ring-[#2563EB]/20 md:rounded-full dark:bg-[#111827] border border-[#E2E8F0] dark:border-[#334155]">
+                <div className="flex min-w-0 flex-col items-center gap-2 md:flex-row">
 
-                    <div className="flex-1 flex items-center gap-3 px-4 py-2.5 w-full">
+                    <div className="flex min-w-0 w-full flex-1 items-center gap-3 px-4 py-2.5">
                         <HiMagnifyingGlass className="w-5 h-5 text-[#64748B] dark:text-[#94A3B8] shrink-0" />
                         <input
                             type="text"
@@ -169,7 +169,7 @@ export default function DoctorSearchClient({ initialDoctors }: DoctorSearchClien
 
                     <div className="hidden md:block w-px h-8 bg-[#E2E8F0] dark:bg-[#334155]" />
 
-                    <div className="flex-1 flex items-center gap-3 px-4 py-2.5 w-full">
+                    <div className="flex min-w-0 w-full flex-1 items-center gap-3 px-4 py-2.5">
                         <HiMapPin className="w-5 h-5 text-[#64748B] dark:text-[#94A3B8] shrink-0" />
                         <input
                             type="text"
@@ -180,19 +180,20 @@ export default function DoctorSearchClient({ initialDoctors }: DoctorSearchClien
                         />
                     </div>
 
-                    <div className="w-full md:w-auto flex items-center gap-2 px-1">
+                    <div className="flex w-full min-w-0 items-center gap-2 px-1 md:w-auto">
                         <button
                             type="button"
-                            onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
-                            className="lg:hidden flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-3 rounded-full border border-[#E2E8F0] dark:border-[#334155] text-sm font-semibold text-[#0F172A] dark:text-[#F8FAFC]"
+                            onClick={() => setIsMobileFilterOpen(true)}
+                            aria-label="Open filters"
+                            title="Open filters"
+                            className="lg:hidden flex size-12 shrink-0 items-center justify-center rounded-full border border-[#E2E8F0] dark:border-[#334155] text-[#0F172A] dark:text-[#F8FAFC]"
                         >
-                            <HiFunnel className="w-4 h-4 text-[#2563EB]" />
-                            <span>Filters</span>
+                            <HiBars3 className="w-5 h-5 text-[#2563EB]" />
                         </button>
 
                         <button
                             type="submit"
-                            className="w-full md:w-auto px-7 py-3 rounded-full bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-sm font-semibold shadow-xs hover:shadow-md transition-all active:scale-95"
+                            className="min-w-0 flex-1 px-7 py-3 rounded-full bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-sm font-semibold shadow-xs hover:shadow-md transition-all active:scale-95 cursor-pointer md:w-auto md:flex-none"
                         >
                             Search
                         </button>
@@ -202,12 +203,22 @@ export default function DoctorSearchClient({ initialDoctors }: DoctorSearchClien
             </form>
 
             {/* Main Grid: Sidebar + Doctor List */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div className="grid min-w-0 grid-cols-1 items-start gap-8 lg:grid-cols-12">
 
                 {/* Filter Sidebar Accordions */}
+                {isMobileFilterOpen && (
+                    <button
+                        type="button"
+                        aria-label="Close filters"
+                        onClick={() => setIsMobileFilterOpen(false)}
+                        className="lg:hidden fixed inset-0 z-40 bg-[#0F172A]/40 backdrop-blur-[2px]"
+                    />
+                )}
                 <aside
-                    className={`lg:col-span-3 bg-white dark:bg-[#111827] border border-[#E2E8F0] dark:border-[#334155] rounded-2xl overflow-hidden shadow-xs ${isMobileFilterOpen ? 'block' : 'hidden lg:block'
-                        }`}
+                    className={`lg:col-span-3 bg-white dark:bg-[#111827] border border-[#E2E8F0] dark:border-[#334155] rounded-2xl overflow-hidden shadow-xs ${isMobileFilterOpen
+                        ? 'fixed inset-y-0 left-0 z-50 block w-[min(20rem,calc(100vw-2rem))] rounded-l-none overflow-y-auto'
+                        : 'hidden lg:block'
+                        } lg:static lg:w-auto lg:rounded-2xl lg:overflow-hidden`}
                 >
                     <div className="p-4 border-b border-[#E2E8F0] dark:border-[#334155] flex items-center justify-between bg-[#F8FAFC] dark:bg-[#1E293B]/50">
                         <div className="flex items-center gap-2 text-sm font-bold text-[#0F172A] dark:text-[#F8FAFC]">
@@ -218,13 +229,15 @@ export default function DoctorSearchClient({ initialDoctors }: DoctorSearchClien
                             <button
                                 type="button"
                                 onClick={resetFilters}
-                                className="text-xs font-medium text-[#2563EB] hover:underline"
+                                className="text-xs font-medium text-[#2563EB] hover:underline cursor-pointer"
                             >
                                 Reset
                             </button>
                             <button
                                 type="button"
                                 onClick={() => setIsMobileFilterOpen(false)}
+                                aria-label="Close filters"
+                                title="Close filters"
                                 className="lg:hidden text-[#64748B] hover:text-[#0F172A]"
                             >
                                 <HiXMark className="w-5 h-5" />
@@ -377,7 +390,7 @@ export default function DoctorSearchClient({ initialDoctors }: DoctorSearchClien
                 </aside>
 
                 {/* Doctor Cards Area & Top Header */}
-                <main className="lg:col-span-9 space-y-6">
+                <main className="min-w-0 space-y-6 lg:col-span-9">
 
                     <div className="flex items-center justify-between gap-4">
                         <div>
@@ -416,8 +429,8 @@ export default function DoctorSearchClient({ initialDoctors }: DoctorSearchClien
                                                     type="button"
                                                     onClick={() => handleSortSelect(option.id)}
                                                     className={`w-full flex items-center justify-between px-4 py-2.5 text-xs font-semibold transition-colors ${isSelected
-                                                            ? 'bg-[#EFF6FF] dark:bg-[#1E293B] text-[#2563EB]'
-                                                            : 'text-[#475569] dark:text-[#CBD5E1] hover:bg-[#F8FAFC] dark:hover:bg-[#1E293B]'
+                                                        ? 'bg-[#EFF6FF] dark:bg-[#1E293B] text-[#2563EB]'
+                                                        : 'text-[#475569] dark:text-[#CBD5E1] hover:bg-[#F8FAFC] dark:hover:bg-[#1E293B]'
                                                         }`}
                                                 >
                                                     <div className="flex items-center gap-2.5">
