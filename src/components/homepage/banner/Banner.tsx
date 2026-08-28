@@ -29,7 +29,7 @@ export default function Banner() {
     };
 
     return (
-        <section className="relative overflow-x-clip bg-[#F8FAFC] dark:bg-[#0F172A] pt-8 pb-16 lg:pt-12 lg:pb-24 transition-colors duration-200">
+        <section className="relative overflow-x-clip bg-[#F8FAFC] dark:bg-[#0F172A] pt-28 pb-16 lg:pt-32 lg:pb-24 transition-colors duration-200">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
                 {/* Main Banner Grid */}

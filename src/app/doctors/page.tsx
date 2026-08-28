@@ -24,7 +24,7 @@ export default async function DoctorsPage({
     const doctorResults = await getDoctors(queryString.toString());
 
     return (
-        <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#0F172A] py-8 transition-colors duration-200">
+        <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#0F172A] pb-8 pt-28 transition-colors duration-200 lg:pt-32">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
 
                 {/* Breadcrumbs Navigation */}
