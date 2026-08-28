@@ -1,7 +1,7 @@
-import { getDoctors } from '@/lib/api/doctor';
 import DoctorSearchClient from '@/components/doctors/DoctorSearchClient';
-import { HiShieldCheck, HiChevronRight } from 'react-icons/hi2';
+import { getDoctors } from '@/lib/api/doctor';
 import Link from 'next/link';
+import { HiChevronRight, HiShieldCheck } from 'react-icons/hi2';
 
 export default async function DoctorsPage({
     searchParams,
@@ -17,7 +17,11 @@ export default async function DoctorsPage({
         }
     });
 
-    const doctors = await getDoctors(queryString.toString());
+    const requestedPage = Number(typeof params.page === "string" ? params.page : 1);
+    queryString.set("page", String(Math.max(1, requestedPage || 1)));
+    queryString.set("limit", "8");
+
+    const doctorResults = await getDoctors(queryString.toString());
 
     return (
         <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#0F172A] py-8 transition-colors duration-200">
@@ -45,12 +49,12 @@ export default async function DoctorsPage({
 
                     <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white dark:bg-[#111827] border border-[#E2E8F0] dark:border-[#334155] text-xs font-semibold text-[#0D9488] shadow-xs self-start sm:self-auto">
                         <HiShieldCheck className="w-4 h-4 text-[#0D9488]" />
-                        <span>{doctors.length} verified doctors available</span>
+                        <span>{doctorResults.total} verified doctors available</span>
                     </div>
                 </div>
 
                 {/* Client Search Shell */}
-                <DoctorSearchClient initialDoctors={doctors} />
+                <DoctorSearchClient initialDoctors={doctorResults.doctors} totalDoctors={doctorResults.total} />
 
             </div>
         </div>

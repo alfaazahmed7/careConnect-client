@@ -9,13 +9,13 @@ interface GetDoctorsResponse {
 
 export const getDoctors = async (
     queryString = ""
-): Promise<Doctor[]> => {
+): Promise<GetDoctorsResponse> => {
     const data = await serverFetch<GetDoctorsResponse>(
         `/api/doctors?${queryString}`
     );
 
-    return data.doctors;
+    return data;
 };
 
-// ): Promise<Doctor[]> -> This asynchronous function returns a Promise that eventually contains an array of Doctor.
-// The <Doctor[]> tells serverFetch what type of data we expect.
+// ): Promise<GetDoctorsResponse> -> This asynchronous function returns doctor records and the total match count.
+// The generic type tells serverFetch what response shape we expect.

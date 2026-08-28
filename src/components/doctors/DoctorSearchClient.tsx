@@ -12,6 +12,8 @@ import {
     HiBriefcase,
     HiCheck,
     HiChevronDown,
+    HiChevronLeft,
+    HiChevronRight,
     HiChevronUp,
     HiMagnifyingGlass,
     HiMapPin,
@@ -24,7 +26,10 @@ import DoctorCard from './DoctorCard';
 
 interface DoctorSearchClientProps {
     initialDoctors: Doctor[];
+    totalDoctors: number;
 }
+
+const DOCTORS_PER_PAGE = 8;
 
 const DEFAULT_SPECIALTIES = [
     'Cardiology',
@@ -41,7 +46,7 @@ const DEFAULT_SPECIALTIES = [
     'Endocrinology',
 ];
 
-export default function DoctorSearchClient({ initialDoctors }: DoctorSearchClientProps) {
+export default function DoctorSearchClient({ initialDoctors, totalDoctors }: DoctorSearchClientProps) {
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -54,6 +59,8 @@ export default function DoctorSearchClient({ initialDoctors }: DoctorSearchClien
     const [minRating, setMinRating] = useState<number>(Number(searchParams.get('rating')) || 0);
     const [consultationType, setConsultationType] = useState<string>(searchParams.get('type') || 'all');
     const [sortBy, setSortBy] = useState<string>(searchParams.get('sort') || 'recommended');
+    const currentPage = Math.max(1, Number(searchParams.get('page')) || 1);
+    const totalPages = Math.max(1, Math.ceil(totalDoctors / DOCTORS_PER_PAGE));
 
     const [isSortOpen, setIsSortOpen] = useState(false);
     const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
@@ -89,6 +96,7 @@ export default function DoctorSearchClient({ initialDoctors }: DoctorSearchClien
             }
         });
 
+        params.delete('page');
         router.replace(`/doctors?${params.toString()}`);
     };
 
@@ -127,6 +135,19 @@ export default function DoctorSearchClient({ initialDoctors }: DoctorSearchClien
             q: searchQuery,
             location: locationQuery,
         });
+    };
+
+    const goToPage = (page: number) => {
+        const nextPage = Math.min(Math.max(page, 1), totalPages);
+        const params = new URLSearchParams(searchParams.toString());
+
+        if (nextPage === 1) {
+            params.delete('page');
+        } else {
+            params.set('page', String(nextPage));
+        }
+
+        router.push(`/doctors?${params.toString()}`);
     };
 
     const resetFilters = () => {
@@ -395,7 +416,7 @@ export default function DoctorSearchClient({ initialDoctors }: DoctorSearchClien
                     <div className="flex items-center justify-between gap-4">
                         <div>
                             <p className="text-sm font-bold text-[#0F172A] dark:text-[#F8FAFC]">
-                                <span className="text-[#2563EB]">{initialDoctors.length}</span> doctors found
+                                <span className="text-[#2563EB]">{totalDoctors}</span> doctors found
                             </p>
                         </div>
 
@@ -479,6 +500,54 @@ export default function DoctorSearchClient({ initialDoctors }: DoctorSearchClien
                                 Clear All Filters
                             </button>
                         </motion.div>
+                    )}
+
+                    {totalPages > 1 && (
+                        <nav
+                            aria-label="Doctor pages"
+                            className="flex flex-col items-center justify-between gap-4 rounded-2xl border border-[#DCE5F2] bg-white p-4 shadow-[0_12px_35px_-24px_rgba(15,23,42,0.65)] dark:border-[#334155] dark:bg-[#111827] sm:flex-row"
+                        >
+                            <p className="text-xs font-medium text-[#64748B] dark:text-[#94A3B8]">
+                                Page <span className="font-bold text-[#0F172A] dark:text-[#F8FAFC]">{currentPage}</span> of {totalPages}
+                            </p>
+
+                            <div className="flex items-center gap-1.5 rounded-full border border-[#E2E8F0] bg-[#F8FAFC] p-1 dark:border-[#334155] dark:bg-[#0F172A]">
+                                <button
+                                    type="button"
+                                    onClick={() => goToPage(currentPage - 1)}
+                                    disabled={currentPage === 1}
+                                    aria-label="Previous page"
+                                    className="flex size-9 items-center justify-center rounded-full text-[#475569] transition-colors hover:bg-white hover:text-[#2563EB] disabled:pointer-events-none disabled:opacity-35 dark:text-[#CBD5E1] dark:hover:bg-[#1E293B]"
+                                >
+                                    <HiChevronLeft className="size-4" />
+                                </button>
+
+                                {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
+                                    <button
+                                        key={page}
+                                        type="button"
+                                        onClick={() => goToPage(page)}
+                                        aria-current={page === currentPage ? 'page' : undefined}
+                                        className={`flex size-9 items-center justify-center rounded-full text-xs font-bold transition-all ${page === currentPage
+                                            ? 'bg-[#2563EB] text-white shadow-[0_5px_14px_-5px_rgba(37,99,235,0.85)]'
+                                            : 'text-[#64748B] hover:bg-white hover:text-[#2563EB] dark:text-[#CBD5E1] dark:hover:bg-[#1E293B]'
+                                            }`}
+                                    >
+                                        {page}
+                                    </button>
+                                ))}
+
+                                <button
+                                    type="button"
+                                    onClick={() => goToPage(currentPage + 1)}
+                                    disabled={currentPage === totalPages}
+                                    aria-label="Next page"
+                                    className="flex size-9 items-center justify-center rounded-full text-[#475569] transition-colors hover:bg-white hover:text-[#2563EB] disabled:pointer-events-none disabled:opacity-35 dark:text-[#CBD5E1] dark:hover:bg-[#1E293B]"
+                                >
+                                    <HiChevronRight className="size-4" />
+                                </button>
+                            </div>
+                        </nav>
                     )}
 
                 </main>
