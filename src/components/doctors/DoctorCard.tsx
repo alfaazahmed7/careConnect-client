@@ -44,7 +44,7 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
                     <div className="relative shrink-0">
                         <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden border border-[#E2E8F0] dark:border-[#334155] relative bg-[#F1F5F9] dark:bg-[#1E293B]">
                             <Image
-                                src={doctor.profile.profileImage}
+                                src={doctor.profile.profileImage ?? 'https://healingdiagnostic.com/uploads/doctors/20240923062604.png'}
                                 alt={doctor.profile.fullName}
                                 fill
                                 className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -90,7 +90,11 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
                             </div>
                             <div className="flex items-center gap-1">
                                 <HiMapPin className="w-4 h-4 text-[#0D9488]" />
-                                <span>{doctor.profile.location.area}, {doctor.profile.location.city}</span>
+                                <span>
+                                    {doctor.profile.location
+                                        ? `${doctor.profile.location.area}, ${doctor.profile.location.city}`
+                                        : "Location not available"}
+                                </span>
                             </div>
                         </div>
                     </div>
