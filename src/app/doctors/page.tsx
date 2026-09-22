@@ -1,5 +1,5 @@
 import DoctorSearchClient from '@/components/doctors/DoctorSearchClient';
-import { getDoctors } from '@/lib/api/doctor';
+import { getDoctors } from '@/services/doctor.services';
 import Link from 'next/link';
 import { HiChevronRight, HiShieldCheck } from 'react-icons/hi2';
 
