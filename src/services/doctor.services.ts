@@ -8,6 +8,11 @@ interface GetDoctorsResponse {
     doctors: Doctor[];
 }
 
+interface GetDoctorSlugResponse {
+    success: boolean,
+    doctor: Doctor;
+}
+
 export const getDoctors = async (
     queryString = ""
 ): Promise<GetDoctorsResponse> => {
@@ -47,6 +52,34 @@ export const getDoctors = async (
             error instanceof Error
                 ? error.message
                 : "Something went wrong while fetching doctors."
+        );
+    }
+};
+
+export const getDoctorBySlug = async (
+    doctorSlug: string
+): Promise<GetDoctorSlugResponse> => {
+    if (!baseUrl) {
+        throw new Error("NEXT_PUBLIC_SERVER_URL is not configured.");
+    }
+
+    const url = `${baseUrl}/api/doctors/${doctorSlug}`;
+
+    try {
+        const res = await fetch(url);
+
+        if (!res.ok) {
+            throw new Error(`Failed to fetch doctor (${res.status})`);
+        }
+
+        return await res.json();
+    } catch (error) {
+        console.error("Failed to fetch doctor:", error);
+
+        throw new Error(
+            error instanceof Error
+                ? error.message
+                : "Something went wrong while fetching the doctor."
         );
     }
 };

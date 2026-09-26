@@ -80,7 +80,7 @@ export default function Navbar() {
                         aria-label="Toggle Color Theme"
                         disabled={!mounted}
                         tabIndex={mounted ? 0 : -1}
-                        className="rounded-full border border-current/30 p-2 text-current transition-opacity hover:opacity-70 focus:outline-none focus-visible:ring-2 focus-visible:ring-current"
+                        className="rounded-full border border-current/30 p-2 text-current transition-opacity hover:opacity-70 focus:outline-none focus-visible:ring-2 focus-visible:ring-current cursor-pointer"
                     >
                         {resolvedTheme === 'dark' ? (
                             <HiSun className="w-5 h-5 text-amber-400" />
